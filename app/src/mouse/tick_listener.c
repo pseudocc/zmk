@@ -21,8 +21,13 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 static float powf(float base, float exponent) {
     // poor man's power implementation rounds the exponent down to the nearest integer.
     float power = 1.0f;
-    for (; exponent >= 1.0f; exponent--) {
-        power = power * base;
+    uint64_t exponent_int = (uint64_t)exponent;
+    while (exponent_int > 0) {
+        if (exponent_int & 1) {
+            power *= base;
+        }
+        base *= base;
+        exponent_int >>= 1;
     }
     return power;
 }
