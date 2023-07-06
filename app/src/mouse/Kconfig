@@ -9,6 +9,10 @@ config ZMK_MOUSE_TICK_DURATION
     int "Mouse tick duration in ms"
     default 8
 
+config ZMK_MOUSE_SMOOTH_MOVE
+    bool "Enable ZMK smoother mouse move"
+    default y
+
 if ZMK_MOUSE
 
 choice ZMK_MOUSE_WORK_QUEUE
