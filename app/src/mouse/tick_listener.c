@@ -74,6 +74,14 @@ static struct vector2d update_movement(struct vector2d *remainder,
         .y = speed(config, max_speed.y, move_duration) * CONFIG_ZMK_MOUSE_TICK_DURATION / 1000,
     };
 
+#if CONFIG_ZMK_MOUSE_SMOOTH_MOVE
+    float max_speed_sum = max_speed.x + max_speed.y;
+    if (max_speed_sum) {
+        move.x = move.x * max_speed.x / max_speed_sum;
+        move.y = move.y * max_speed.y / max_speed_sum;
+    }
+#endif
+
     track_remainder(&(move.x), &(remainder->x));
     track_remainder(&(move.y), &(remainder->y));
 
